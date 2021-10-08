@@ -37,4 +37,12 @@ router.post("/", async function (req, res) {
     });
   }
 });
+router.put("/", async function (req, res) {
+  await List.updateOne(
+    { _id: req.body.id },
+    { $set: { status: req.body.status } }
+  )
+    .then((response) => res.send({ response: response }))
+    .catch((err) => console.log(err));
+});
 module.exports = router;
