@@ -45,71 +45,83 @@ const Todolist = () => {
   const [data, setData] = useState("");
   const [length, setLength] = useState(0);
   const [checked, setChecked] = useState([]);
+  const [loggedIn, login] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/").then((response) => {
-      console.log(response.data.data);
-      let data = [];
-      setLength(response.data.data.length);
-      for (var i = 0; i < response.data.data.length; i++) {
-        data.push(response.data.data[i]);
-      }
-      setList(data);
-    });
-  }, [length]);
+    axios
+      .get("http://localhost:5000/user", { withCredentials: true })
+      .then((res) => {
+        if (res.data) {
+          axios.get("http://localhost:5000/").then((response) => {
+            console.log(response.data.data);
+            let data = [];
+            setLength(response.data.data.length);
+            for (var i = 0; i < response.data.data.length; i++) {
+              data.push(response.data.data[i]);
+            }
+            setList(data);
+          });
+        } else {
+          console.log("LOGIN FIRST");
+        }
+      });
+  });
   return (
     <div className=" w-full h-screen relative  py-20">
-      <div className="relative border-2 border-black h-96   w-96   text-center bg-purple mx-auto rounded-2xl ">
-        <p className="text-3xl underline mb-2">TODO LIST</p>
-        <hr></hr>
-        <ul className="list-outside text-lg">
-          {List.map((item, index) => (
-            <li key={item._id}>
+      {loggedIn && (
+        <div className="relative border-2 border-black h-96   w-96   text-center bg-purple mx-auto rounded-2xl ">
+          <p className="text-3xl underline mb-2">TODO LIST</p>
+          <hr></hr>
+          <ul className="list-outside text-lg">
+            {List.map((item, index) => (
+              <li key={item._id}>
+                <input
+                  type="checkbox"
+                  className="m-2"
+                  onChange={() => {
+                    CrossOver(item._id, index);
+                  }}
+                ></input>
+                <p
+                  className="inline-block"
+                  style={{
+                    textDecoration: checked[index] ? "line-through" : "none",
+                  }}
+                >
+                  {item.name}
+                </p>
+                <button
+                  className=" m-2  p-1 hover:opacity-60 "
+                  type="submit"
+                  onClick={() => {
+                    deleteItem(item);
+                  }}
+                >
+                  <FaTrash size={15} />
+                </button>
+                <hr></hr>
+              </li>
+            ))}
+            <li>
               <input
-                type="checkbox"
-                className="m-2"
-                onChange={() => {
-                  CrossOver(item._id, index);
-                }}
+                className="border-2 w-44 m-2 text-lg "
+                type="text"
+                name="data"
+                value={data}
+                onChange={(e) => setData(e.target.value)}
               ></input>
-              <p
-                className="inline-block"
-                style={{
-                  textDecoration: checked[index] ? "line-through" : "none",
-                }}
-              >
-                {item.name}
-              </p>
               <button
-                className=" m-2  p-1 hover:opacity-60 "
                 type="submit"
-                onClick={() => {
-                  deleteItem(item);
-                }}
+                className="border-2 m-2 rounded-xl hover:bg-black hover:text-white p-1"
+                onClick={addItem}
               >
-                <FaTrash size={15} />
+                Add Item
               </button>
-              <hr></hr>
             </li>
-          ))}
-          <li>
-            <input
-              className="border-2 w-44 m-2 text-lg "
-              type="text"
-              name="data"
-              value={data}
-              onChange={(e) => setData(e.target.value)}
-            ></input>
-            <button
-              type="submit"
-              className="border-2 m-2 rounded-xl hover:bg-black hover:text-white p-1"
-              onClick={addItem}
-            >
-              Add Item
-            </button>
-          </li>
-        </ul>
-      </div>
+          </ul>
+        </div>
+      )}
+      {!loggedIn && <p className="text-center text-5xl">PLEASE LOGIN </p>}
     </div>
   );
 };

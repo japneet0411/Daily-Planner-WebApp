@@ -1,11 +1,39 @@
 const express = require("express");
-
+const passport = require("passport");
+const passportLocal = require("passport-local").Strategy;
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const cors = require("cors");
+
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.use(express.urlencoded({ extended: true }));
 const routes = require("./routes/routes");
 
-const cors = require("cors");
+app.use(
+  session({
+    secret: "secretcode",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(cookieParser("secretcode"));
+app.use(passport.initialize());
+app.use(passport.session());
+require("./middleware/passport.config")(passport);
+
+//connecting to react app
+app.use(
+  cors({
+    origin: "http://localhost:3000", //origin
+    credentials: true,
+  })
+);
 
 const port = process.env.PORT || 5000;
 
@@ -17,9 +45,6 @@ mongoose
   .then(() => {
     console.log("Connected to MongoDB");
   });
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cors());
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
