@@ -21,7 +21,11 @@ const Login = () => {
         { withCredentials: true }
       )
       .then((res) => {
-        history.push("/");
+        if (res.data === "success") {
+          history.push("/");
+        } else {
+          setMsg(res.data);
+        }
       })
       .catch((err) => console.log(err));
 
@@ -32,27 +36,31 @@ const Login = () => {
   return (
     <div className="w-full h-screen relative  py-20">
       <div className="relative border-2 border-black h-96   w-96   text-center bg-purple-100 mx-auto rounded-2xl">
-        <p>LOGIN </p>
-        <form onSubmit={handleSubmit}>
-          Username:
+        <p className="text-center text-3xl roboto mt-3 mb-5">LOGIN </p>
+        <form className="mont space-y-3" onSubmit={handleSubmit}>
           <input
             type="text"
             name="username"
-            className="border-2"
+            placeholder="username"
+            className="border-2 px-3 py-2 rounded-lg"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           ></input>
           <hr />
-          Password:
+
           <input
             type="password"
             name="password"
-            className="border-2"
+            placeholder="password"
+            className="border-2 px-3 py-2 rounded-lg"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></input>
           <hr />
-          <button className="border-2" type="submit">
+          <button
+            type="submit"
+            className="border-2 border-black px-5 py-2 rounded-lg hover:bg-gray-300"
+          >
             Submit
           </button>
           <p className="text-red-500 p-5 m-5">{msg}</p>

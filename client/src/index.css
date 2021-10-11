@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Roboto:wght@500&display=swap");
+
+.roboto {
+  font-family: "Roboto", sans-serif;
+}
+.mont {
+  font-family: "Montserrat", sans-serif;
+}
+.checkbox-round {
+  width: 1em;
+  height: 1em;
+  background-color: white;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.checkbox-round:checked {
+  background-color: #c996cc;
+  border: 1px solid black;
+}
