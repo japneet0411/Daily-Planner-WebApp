@@ -12,7 +12,8 @@ router.post("/login", (req, res, next) => {
       req.logIn(user, (err) => {
         if (err) throw err;
         res.send("Successfully Authenticated");
-        // console.log(req.user);
+        console.log("authenticated");
+        console.log(req.user);
       });
     }
   })(req, res, next);
@@ -75,6 +76,7 @@ router.post("/", async function (req, res) {
   }
 });
 router.put("/", async function (req, res) {
+  console.log(req.body);
   await List.updateOne(
     { _id: req.body.id },
     { $set: { status: req.body.status } }

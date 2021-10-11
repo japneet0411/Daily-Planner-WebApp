@@ -12,10 +12,14 @@ const Login = () => {
     // console.log(e.target.username.value);
     e.preventDefault();
     axios
-      .post("http://localhost:5000/login", {
-        username: e.target.username.value,
-        password: e.target.password.value,
-      })
+      .post(
+        "http://localhost:5000/login",
+        {
+          username: e.target.username.value,
+          password: e.target.password.value,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         history.push("/");
       })
