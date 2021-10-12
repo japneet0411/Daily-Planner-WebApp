@@ -38,8 +38,11 @@ router.post("/register", (req, res) => {
 });
 
 // *********************************************ANALAYSIS****************************************
-const ProductiveDay = require("./../controllers/analyse");
-router.route("/analyse").get(ProductiveDay);
+const ProductiveDay = require("../controllers/productiveday");
+router.route("/weekday").get(ProductiveDay);
+
+const AvgTime = require("../controllers/avgtime");
+router.route("/avg").get(AvgTime);
 
 // *********************************************ANALAYSIS****************************************
 router.get("/user", (req, res) => {

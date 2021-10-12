@@ -127,8 +127,7 @@ const Todolist = () => {
               className="absolute text-xl text-red-500 bottom-2 right-5 underline"
               to="/analysis"
             >
-              {" "}
-              >>>Analysis page
+              Analysis page
             </Link>
           </p>
         </div>

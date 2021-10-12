@@ -1,4 +1,4 @@
-const List = require("./../modal/item");
+const List = require("../modal/item");
 var days = [0, 0, 0, 0, 0, 0, 0];
 var index, max_index;
 var max = 0;
