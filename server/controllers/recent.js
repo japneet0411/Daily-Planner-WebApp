@@ -8,7 +8,7 @@ const Avgtime = async (req, res) => {
     created_at: { $gte: date1 },
     completed_at: { $lte: date2 },
   }).then((data) => {
-    console.log(data);
+    // console.log(data);
     len = data.length;
   });
   res.status(200).send({ len });

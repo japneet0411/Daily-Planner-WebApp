@@ -33,8 +33,9 @@ require("./middleware/passport.config")(passport);
 //connecting to react app
 app.use(
   cors({
-    origin: "http://localhost:3000", //origin
+    // origin: "http://localhost:3000", //origin
     credentials: true,
+    origin: true,
   })
 );
 
