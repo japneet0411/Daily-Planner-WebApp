@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const cors = require("cors");
+const dotenv = require("dotenv").config();
 
 const app = express();
 
@@ -17,12 +18,14 @@ const routes = require("./routes/routes");
 
 app.use(
   session({
-    secret: "secretcode",
+    secret: process.env.secret,
     resave: true,
     saveUninitialized: true,
+    cookie: { secure: false },
   })
 );
-app.use(cookieParser("secretcode"));
+
+app.use(cookieParser(process.env.secret));
 app.use(passport.initialize());
 app.use(passport.session());
 require("./middleware/passport.config")(passport);
