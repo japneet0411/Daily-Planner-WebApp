@@ -77,8 +77,8 @@ const Analysis = () => {
   return (
     <div>
       {loggedIn && (
-        <div className="flex flex-col  md:flex-row h-screen">
-          <div className="flex flex-col mt-4   mont ">
+        <div className="flex flex-col  md:flex-row h-screen overflow-x-hidden">
+          <div className="flex flex-col mt-4 w-full  mont ">
             <p className="text-2xl roboto text-center text-5xl ">Analysis</p>
             <p className="text-center text-xl mt-6  ">
               Most Productive on : {Day}
@@ -87,7 +87,7 @@ const Analysis = () => {
             <Chart
               width={"600px"}
               height={"400px"}
-              className="mont text-lg"
+              className="mont text-lg chart -ml-24 md:ml-0 "
               chartType="BarChart"
               loader={<div>Loading Chart</div>}
               data={[
@@ -103,7 +103,7 @@ const Analysis = () => {
               options={{
                 title: "Daily performance",
 
-                chartArea: { width: "60%" },
+                chartArea: { width: "50%" },
                 colors: ["#916BBF"],
                 hAxis: {
                   title: "Tasks done",
@@ -119,7 +119,7 @@ const Analysis = () => {
             </p>
           </div>
 
-          <div className="bg-purple-100 md:ml-auto text-center">
+          <div className="bg-purple-100  text-center h-screen md:h-full w-full h-screen">
             <p className="text-center text-2xl m-5 mt-10 roboto">Enter Range</p>
             <form onSubmit={sendDates} className="mt-20 ">
               <input
@@ -150,7 +150,7 @@ const Analysis = () => {
               className="animation"
               style={{
                 cursor: "context-menu",
-                marginLeft: "100px",
+                marginLeft: "35%",
                 position: "relative",
               }}
             />
