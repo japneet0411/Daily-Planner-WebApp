@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
+import Landing from "../components/landing";
+import { AiFillPlusCircle } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { HiArrowSmRight } from "react-icons/hi";
 
 import axios from "axios";
 const Todolist = () => {
   function addItem(e) {
     e.preventDefault();
-    console.log(data);
+    // console.log(data);
 
     axios.post("http://localhost:5000/", {
       name: data,
       create: Date(),
       status: false,
+      complete: null,
     });
     setData("");
   }
@@ -19,8 +24,10 @@ const Todolist = () => {
     axios.delete(link).then((data) => console.log(data));
   }
 
-  function CrossOver(id, index) {
+  function CrossOver(id, sts) {
+    var complete;
     var link = "http://localhost:5000/" + id;
+    complete = !sts ? Date() : null;
 
     axios
       .get(link)
@@ -29,6 +36,7 @@ const Todolist = () => {
           .put("http://localhost:5000/", {
             id,
             status: !response.data.data.status,
+            complete,
           })
           .then(() => {
             console.log("updated");
@@ -39,7 +47,7 @@ const Todolist = () => {
 
   const [List, setList] = useState([]);
   const [data, setData] = useState("");
-  const [length, setLength] = useState(0);
+
   // const [checked, setChecked] = useState([]);
   const [loggedIn, login] = useState(false);
 
@@ -52,7 +60,6 @@ const Todolist = () => {
           login(true);
           axios.get("http://localhost:5000/").then((response) => {
             let data = [];
-            // setLength(response.data.data.length);
             for (var i = 0; i < response.data.data.length; i++) {
               data.push(response.data.data[i]);
             }
@@ -62,26 +69,26 @@ const Todolist = () => {
           login(false);
         }
       });
-  });
+  }, []);
   return (
-    <div className=" w-full h-screen relative  py-20">
+    <div className=" w-full h-screen relative py-6 ">
       {loggedIn && (
-        <div className="relative border-2 border-black h-auto min-h-full  w-96   text-center bg-purple mx-auto rounded-2xl ">
-          <p className="text-3xl underline mb-2">TODO LIST</p>
-          <hr></hr>
-          <ul className="list-outside text-lg">
+        <div className="border-2 border-black h-auto min-h-full  w-96   text-center bg-purple-200 mx-auto rounded-2xl ">
+          <p className="roboto text-3xl  mt-3 mb-4">TODO LIST</p>
+          <hr className="bg-black h-0.5 mb-5"></hr>
+          <ul className="list-outside text-lg mont">
             {List.map((item, index) => (
               <li key={item._id}>
                 <input
                   type="checkbox"
                   checked={item.status ? "checked" : ""}
-                  className="m-2"
+                  className="m-2 checkbox-round"
                   onClick={() => {
-                    CrossOver(item._id, index);
+                    CrossOver(item._id, item.status);
                   }}
                 ></input>
                 <p
-                  className="inline-block"
+                  className="inline-block w-16"
                   style={{
                     textDecoration: item.status ? "line-through" : "none",
                   }}
@@ -89,7 +96,7 @@ const Todolist = () => {
                   {item.name}
                 </p>
                 <button
-                  className=" m-2  p-1 hover:opacity-60 "
+                  className=" m-4  p-1 hover:opacity-60 "
                   type="submit"
                   onClick={() => {
                     deleteItem(item);
@@ -97,7 +104,6 @@ const Todolist = () => {
                 >
                   <FaTrash size={15} />
                 </button>
-                <hr></hr>
               </li>
             ))}
             <li>
@@ -110,16 +116,27 @@ const Todolist = () => {
               ></input>
               <button
                 type="submit"
-                className="border-2 m-2 rounded-xl hover:bg-black hover:text-white p-1 "
+                className="absolute mt-2 hover:opacity-60 text-black"
                 onClick={addItem}
               >
-                Add Item
+                <AiFillPlusCircle size={30} />
               </button>
             </li>
           </ul>
+          <p>
+            <Link
+              className="absolute text-xl bottom-2  underline right-10 "
+              to="/analyse"
+            >
+              <span className="flex flex-row justify-between">
+                Analysis page
+                <HiArrowSmRight className="ml-2 mt-2" size={20} />
+              </span>
+            </Link>
+          </p>
         </div>
       )}
-      {!loggedIn && <p className="text-center text-5xl">PLEASE LOGIN </p>}
+      {!loggedIn && <Landing />}
     </div>
   );
 };

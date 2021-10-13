@@ -4,6 +4,7 @@ const List = require("./../modal/item");
 var passport = require("passport");
 const User = require("./../modal/user");
 const bcrypt = require("bcryptjs");
+
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
@@ -11,7 +12,7 @@ router.post("/login", (req, res, next) => {
     else {
       req.logIn(user, (err) => {
         if (err) throw err;
-        res.send("Successfully Authenticated");
+        res.send("success");
         console.log("authenticated");
         console.log(req.user);
       });
@@ -36,6 +37,19 @@ router.post("/register", (req, res) => {
   });
 });
 
+// *********************************************ANALAYSIS****************************************
+const ProductiveDay = require("../controllers/productiveday");
+router.route("/weekday").get(ProductiveDay);
+
+const AvgTime = require("../controllers/avgtime");
+router.route("/avg").get(AvgTime);
+
+const Tasks = require("../controllers/tasks");
+router.route("/tasks").post(Tasks);
+
+const Recent = require("../controllers/recent");
+router.route("/recent").get(Recent);
+// *********************************************ANALAYSIS****************************************
 router.get("/user", (req, res) => {
   res.send(req.user);
 });
@@ -79,7 +93,7 @@ router.put("/", async function (req, res) {
   console.log(req.body);
   await List.updateOne(
     { _id: req.body.id },
-    { $set: { status: req.body.status } }
+    { $set: { status: req.body.status, completed_at: req.body.complete } }
   )
     .then((response) => res.send({ response: response }))
     .catch((err) => console.log(err));
