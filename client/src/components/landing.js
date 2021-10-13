@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
-    <div className="bg-purple-100 w-full h-screen -mt-7">
+    <div className="bg-purple-100 w-full h-screen">
       <p className="pt-32 roboto text-5xl text-center ">TODOLIST APP </p>
       <div className="mont flex flex-row justify-center text-center mt-20 gap-10 text-xl">
         <Link

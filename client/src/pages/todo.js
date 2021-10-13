@@ -55,85 +55,90 @@ const Todolist = () => {
     axios
       .get("http://localhost:5000/user", { withCredentials: true })
       .then((res) => {
-        // console.log(res);
         if (res.data) {
           login(true);
-          axios.get("http://localhost:5000/").then((response) => {
-            let data = [];
-            for (var i = 0; i < response.data.data.length; i++) {
-              data.push(response.data.data[i]);
-            }
-            setList(data);
-          });
+          axios
+            .get("http://localhost:5000/")
+            .then((response) => {
+              let data = [];
+              for (var i = 0; i < response.data.data.length; i++) {
+                data.push(response.data.data[i]);
+              }
+              setList(data);
+            })
+            .catch((err) => console.log(err));
         } else {
           login(false);
         }
-      });
-  }, []);
+      })
+      .catch((err) => console.log(err));
+  });
   return (
-    <div className=" w-full h-screen relative py-6 ">
+    <div className=" w-full h-screen relative  ">
       {loggedIn && (
-        <div className="border-2 border-black h-auto min-h-full  w-96   text-center bg-purple-200 mx-auto rounded-2xl ">
-          <p className="roboto text-3xl  mt-3 mb-4">TODO LIST</p>
-          <hr className="bg-black h-0.5 mb-5"></hr>
-          <ul className="list-outside text-lg mont">
-            {List.map((item, index) => (
-              <li key={item._id}>
+        <div className="py-4">
+          <div className="border-2 border-black h-auto min-h-full  w-96  text-center bg-purple-200 mx-auto rounded-2xl ">
+            <p className="roboto text-3xl  mt-3 mb-3">TODO LIST</p>
+            <hr className="bg-black h-0.5 mb-5"></hr>
+            <ul className="list-outside text-lg mont ">
+              {List.map((item, index) => (
+                <li key={item._id}>
+                  <input
+                    type="checkbox"
+                    checked={item.status ? "checked" : ""}
+                    className="m-2 checkbox-round"
+                    onClick={() => {
+                      CrossOver(item._id, item.status);
+                    }}
+                  ></input>
+                  <p
+                    className="inline-block w-16"
+                    style={{
+                      textDecoration: item.status ? "line-through" : "none",
+                    }}
+                  >
+                    {item.name}
+                  </p>
+                  <button
+                    className=" m-4  p-1 hover:opacity-60 "
+                    type="submit"
+                    onClick={() => {
+                      deleteItem(item);
+                    }}
+                  >
+                    <FaTrash size={15} />
+                  </button>
+                </li>
+              ))}
+              <li>
                 <input
-                  type="checkbox"
-                  checked={item.status ? "checked" : ""}
-                  className="m-2 checkbox-round"
-                  onClick={() => {
-                    CrossOver(item._id, item.status);
-                  }}
+                  className="border-2 w-44 m-2 text-lg "
+                  type="text"
+                  name="data"
+                  value={data}
+                  onChange={(e) => setData(e.target.value)}
                 ></input>
-                <p
-                  className="inline-block w-16"
-                  style={{
-                    textDecoration: item.status ? "line-through" : "none",
-                  }}
-                >
-                  {item.name}
-                </p>
                 <button
-                  className=" m-4  p-1 hover:opacity-60 "
                   type="submit"
-                  onClick={() => {
-                    deleteItem(item);
-                  }}
+                  className="absolute mt-2 hover:opacity-60 text-black"
+                  onClick={addItem}
                 >
-                  <FaTrash size={15} />
+                  <AiFillPlusCircle size={30} />
                 </button>
               </li>
-            ))}
-            <li>
-              <input
-                className="border-2 w-44 m-2 text-lg "
-                type="text"
-                name="data"
-                value={data}
-                onChange={(e) => setData(e.target.value)}
-              ></input>
-              <button
-                type="submit"
-                className="absolute mt-2 hover:opacity-60 text-black"
-                onClick={addItem}
+            </ul>
+            <p>
+              <Link
+                className="absolute text-xl bottom-2  underline right-10 "
+                to="/analyse"
               >
-                <AiFillPlusCircle size={30} />
-              </button>
-            </li>
-          </ul>
-          <p>
-            <Link
-              className="absolute text-xl bottom-2  underline right-10 "
-              to="/analyse"
-            >
-              <span className="flex flex-row justify-between">
-                Analysis page
-                <HiArrowSmRight className="ml-2 mt-2" size={20} />
-              </span>
-            </Link>
-          </p>
+                <span className="flex flex-row justify-between">
+                  Analysis page
+                  <HiArrowSmRight className="ml-2 mt-2" size={20} />
+                </span>
+              </Link>
+            </p>
+          </div>
         </div>
       )}
       {!loggedIn && <Landing />}
