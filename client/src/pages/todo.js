@@ -3,6 +3,7 @@ import { FaTrash } from "react-icons/fa";
 import Landing from "../components/landing";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { HiArrowSmRight } from "react-icons/hi";
 
 import axios from "axios";
 const Todolist = () => {
@@ -68,7 +69,7 @@ const Todolist = () => {
           login(false);
         }
       });
-  });
+  }, []);
   return (
     <div className=" w-full h-screen relative py-6 ">
       {loggedIn && (
@@ -87,7 +88,7 @@ const Todolist = () => {
                   }}
                 ></input>
                 <p
-                  className="inline-block w-12"
+                  className="inline-block w-16"
                   style={{
                     textDecoration: item.status ? "line-through" : "none",
                   }}
@@ -124,10 +125,13 @@ const Todolist = () => {
           </ul>
           <p>
             <Link
-              className="absolute text-xl text-red-500 bottom-2 right-5 underline"
-              to="/analysis"
+              className="absolute text-xl bottom-2  underline right-10 "
+              to="/analyse"
             >
-              Analysis page
+              <span className="flex flex-row justify-between">
+                Analysis page
+                <HiArrowSmRight className="ml-2 mt-2" size={20} />
+              </span>
             </Link>
           </p>
         </div>

@@ -1,7 +1,8 @@
 const List = require("../modal/item");
-var diff = 0,
-  cnt = 0;
+
 const Avgtime = async (req, res) => {
+  var diff = 0,
+    cnt = 0;
   await List.find({}).then((data) => {
     for (var i = 0; i < data.length; i++) {
       if (data[i].completed_at != null) {

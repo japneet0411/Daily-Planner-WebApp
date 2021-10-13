@@ -44,6 +44,11 @@ router.route("/weekday").get(ProductiveDay);
 const AvgTime = require("../controllers/avgtime");
 router.route("/avg").get(AvgTime);
 
+const Tasks = require("../controllers/tasks");
+router.route("/tasks").post(Tasks);
+
+const Recent = require("../controllers/recent");
+router.route("/recent").get(Recent);
 // *********************************************ANALAYSIS****************************************
 router.get("/user", (req, res) => {
   res.send(req.user);
