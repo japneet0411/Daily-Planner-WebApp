@@ -1,6 +1,6 @@
 
-<h1>TODO LIST APP 📅</h1>
-  <h3>ToDo List webapp built using MERN stack with additional analytics feature <br/>
+<h1>DAILY PLANNER WEBAPP 📅</h1>
+  <h3> Webapp built using MERN stack with additional analytics feature <br/>
     which helps you track your progress with time ⏰<br/>
     </h3>
   <h1>FEATURES </h1>
