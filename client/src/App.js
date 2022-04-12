@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       <Helmet>
-        <title>TODO APP</title>
+        <title>DAILY PLANNER WEB APP</title>
         <meta
           name="todo list"
           content="App with detailed analysis of tasks performed"

@@ -19,6 +19,7 @@ const ProductiveDay = async (req, res) => {
           max_index = i;
         }
       }
+      var day = " ";
       switch (max_index) {
         case 0:
           day = "Sunday";

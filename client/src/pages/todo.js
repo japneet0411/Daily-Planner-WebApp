@@ -78,7 +78,7 @@ const Todolist = () => {
       {loggedIn && (
         <div className="py-4">
           <div className="border-2 border-black h-auto min-h-full  w-96  text-center bg-purple-200 mx-auto rounded-2xl ">
-            <p className="roboto text-3xl  mt-3 mb-3">TODO LIST</p>
+            <p className="roboto text-3xl  mt-3 mb-3">ADD TASKS</p>
             <hr className="bg-black h-0.5 mb-5"></hr>
             <ul className="list-outside text-lg mont ">
               {List.map((item, index) => (
